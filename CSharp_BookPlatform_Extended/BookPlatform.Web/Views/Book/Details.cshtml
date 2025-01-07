@@ -1,0 +1,99 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+
+@using BookPlatform.Data.Models
+@using BookPlatform.Data.Repository.Interfaces
+@using BookPlatform.Core.ViewModels.Book
+
+@using static BookPlatform.Common.OutputMessages.ReadingList;
+@model BookDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+
+    // set reading list button text
+    string readingListButtonText = "Add to Reading List";
+    if (TempData["ReadingStatus"] != null) 
+    {
+        readingListButtonText = TempData["ReadingStatus"] as string;
+    }
+
+    // set alerts for adding a book to reading list
+    if (TempData[nameof(SuccessfullyAddedToReadingList)] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData[nameof(SuccessfullyAddedToReadingList)] <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    if (TempData[nameof(BookAlreadyInReadingList)] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData[nameof(BookAlreadyInReadingList)] <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="card mb-2 shadow-sm" style="width: 100%">
+                <img src="@Model.ImageUrl" class="card-img-top" alt="Cover Image" style="height: 450px; object-fit: cover;">                
+            </div>   
+            <div class="col-md-12">
+                <div class="buttons" style="width: 100%">
+                    <div class="d-flex flex-column">
+                        @if (this.User?.Identity?.IsAuthenticated ?? false)
+                        {              
+                            <div class="dropdown d-flex flex-column">
+                                <button type="button" class="btn btn-dark dropdown-toggle mb-2" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @readingListButtonText
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 100%">
+                                    <a id="loadReadingListPartial" class="dropdown-item text-center" asp-controller="ReadingList" asp-action="AddAsRead" asp-route-readingStatusId="1" asp-route-bookId="@Model.Id">Read</a>
+                                    <a class="dropdown-item text-center" asp-controller="ReadingList" asp-action="Add" asp-route-readingStatusId="2" asp-route-bookId="@Model.Id">Currently reading</a>
+                                    <a class="dropdown-item text-center" asp-controller="ReadingList" asp-action="Add" asp-route-readingStatusId="3" asp-route-bookId="@Model.Id">Want to read</a>
+                                </div>
+                            </div>
+                        }        
+                        <a class="btn btn-outline-dark mb-2" asp-controller="Review" asp-action="AllBookReviews" asp-route-bookId="@Model.Id">Reviews</a>
+                        <a class="btn btn-info mb-2" asp-controller="Quote" asp-action="AllBookQuotes" asp-route-bookId="@Model.Id">Quotes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="col-md-9 col-sm-6 col-xs-12 min-vw-50">
+            <h3>@Model.Title</h3>
+            <p class="text-start">@Model.Author</p>
+            <div class="d-flex flex-row align-content-center mt-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
+                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                </svg>
+                <p class="ms-2 my-0 py-0">@Model.AverageRating.ToString("F2")</p>
+            </div>
+            <div class="card mt-3 mb-3 shadow-sm" style="width:100%">
+                <div class="card-body">                                       
+                    <p class="card-text">@Model.Description</p>                    
+                    <div class="card-footer d-flex align-items-center">
+                        @if (@Model.PublicationYear < 0)
+                        {
+                            <p class="mb-0">First published in @Math.Abs(@Model.PublicationYear) BC</p>
+                        }
+                        else
+                        {
+                            <p class="mb-0">First published in @Model.PublicationYear</p>
+                        }                  
+                    </div>
+                </div>                
+            </div>     
+            <p class="text-secondary text-end">@Model.Genre</p>
+        </div>
+    </div>
+</div>
+
+
+

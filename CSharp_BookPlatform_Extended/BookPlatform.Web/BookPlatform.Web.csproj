@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-BookPlatform.Web-9644fa2e-922b-4f36-936c-b15ea2057d70</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\datasets\**" />
+    <Content Remove="wwwroot\datasets\**" />
+    <EmbeddedResource Remove="wwwroot\datasets\**" />
+    <None Remove="wwwroot\datasets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.13.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookPlatform.Common\BookPlatform.Common.csproj" />
+    <ProjectReference Include="..\BookPlatform.Data.Models\BookPlatform.Data.Models.csproj" />
+    <ProjectReference Include="..\BookPlatform.Data\BookPlatform.Data.csproj" />
+    <ProjectReference Include="..\BookPlatform.Services.Data\BookPlatform.Core.Services.csproj" />
+    <ProjectReference Include="..\BookPlatform.Web.Infrastructure\BookPlatform.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\BookPlatform.Web.ViewModels\BookPlatform.Core.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+</Project>

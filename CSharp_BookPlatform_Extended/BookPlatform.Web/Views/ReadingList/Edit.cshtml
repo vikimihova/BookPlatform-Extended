@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+
+@using BookPlatform.Data.Models
+@using BookPlatform.Data.Repository.Interfaces
+@using BookPlatform.Core.ViewModels.ReadingList
+
+@model ReadingListEditInputModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="card mb-2 shadow-sm" style="width: 100%">
+                <img src="@Model.ImageUrl" class="card-img-top" alt="Cover Image" style="height: 450px; object-fit: cover;">
+            </div>          
+            <div class="d-flex flex-column">
+                <a class="btn btn-dark" asp-controller="ReadingList" asp-action="Index">Go back</a>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-6 col-xs-12 min-vw-50">
+            <h3>@Model.BookTitle</h3>
+            <form asp-action="Edit" method="post" asp-antiforgery="true">
+                <input type="hidden" asp-for="BookId" value="@Model.BookId" />
+                <input type="hidden" asp-for="BookTitle" value="@Model.BookTitle" />
+                <input type="hidden" asp-for="ImageUrl" value="@Model.ImageUrl" />
+                <input type="hidden" asp-for="ReadingStatus" value="@Model.ReadingStatus" />
+                <div>
+                    <label asp-for="@Model.Rating" class="form-label-add-edit">Select Rating</label>
+                    <select asp-for="@Model.Rating" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Ratings, "Id", "Description"))">
+                        <option value="">Select Rating...</option>
+                    </select>
+                    <span asp-validation-for="@Model.Rating" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="DateFinished">Date Finished</label>
+                    <input asp-for="DateFinished" placeholder="dd-MM-yyyy" class="form-control" />
+                    <span asp-validation-for="DateFinished" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="@Model.CharacterId" class="form-label-add-edit">Select Character</label>
+                    <div class="d-flex">
+                        <select asp-for="@Model.CharacterId" class="form-control" style="height: 50px;" aria-required="true" asp-items="@(new SelectList(Model.Characters, "Id", "Name"))">
+                            <option value="">Select Character...</option>
+                        </select>
+                        <span asp-validation-for="@Model.CharacterId" class="text-danger"></span>
+                        <a class="btn btn-info align-content-center mb-2 ms-2" style="height: 50px; width: 150px;" asp-controller="Character" asp-action="Add" asp-route-bookId="@Model.BookId" asp-route-readingStatusId="@Model.ReadingStatus">Add Character</a>
+                    </div>       
+                </div>
+                <div>
+                    <label for="Review">Review</label>
+                    <textarea asp-for="Review" class="form-control" style="height: 200px;"></textarea>
+                    <span asp-validation-for="Review" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
