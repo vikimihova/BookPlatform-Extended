@@ -262,7 +262,7 @@ namespace BookPlatform.Web.Controllers
 
             if (model.DateFinished != null)
             {
-                if (!DateTime.TryParseExact(model.DateFinished, DateViewFormat,
+                if (!DateTime.TryParseExact(model.DateFinished, DateInputFormat,
                 CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateFinished))
                 {
                     ModelState.AddModelError(nameof(model.DateFinished), WrongDateInputFormat);
