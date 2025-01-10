@@ -252,7 +252,7 @@ namespace BookPlatform.Core.Services
             // add date finished
             if (model.DateFinished != null)
             {
-                bool isFinishDateValid = DateTime.TryParseExact(model.DateFinished, DateViewFormat,
+                bool isFinishDateValid = DateTime.TryParseExact(model.DateFinished, DateInputFormat,
                     CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateFinished);
 
                 if (isFinishDateValid == true)
