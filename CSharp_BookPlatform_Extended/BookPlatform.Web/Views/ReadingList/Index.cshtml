@@ -2,11 +2,10 @@
 @model ReadingListPaginatedViewModel
 
 <table class="table table-hover text-start">
-    <thead class="table-dark">
+    <thead>
         <tr>
-            <th class="col-1 text-center">Cover</th>
+            <th class="col-1"></th>
             <th class="col-2 text-wrap">Title</th>
-            <th class="col-2 text-wrap">Author</th>
             <th class="col-2">My Rating</th>
             <th class="col-1">Character</th>
             <th class="col-2 text-center">Status</th>
@@ -25,10 +24,10 @@
                 </td>                    
                 <td>
                     <a class="book-title" asp-controller="Book" asp-action="Details" asp-route-bookId="@book.BookId">
-                        @book.BookTitle
-                    </a>                    
+                        <h6>@book.BookTitle</h6>
+                    </a>
+                    <p>@book.Author</p>
                 </td>
-                <td>@book.Author</td>
                 <td>
                     @if (book.Rating != null)
                     {
@@ -57,7 +56,7 @@
                 </td>                
                 <td>
                     @if (book.FavoriteCharacter != null) {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="pink" class="bi bi-heart-fill me-1 mb-n1" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#CD5C5C" class="bi bi-heart-fill me-1 mb-n1" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
                         </svg>
 
