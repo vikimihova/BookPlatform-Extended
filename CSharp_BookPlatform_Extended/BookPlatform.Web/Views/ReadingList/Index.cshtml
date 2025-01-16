@@ -17,17 +17,22 @@
         @foreach (var book in Model.Books)
         {
             <tr>
+                @* Book Cover *@
                 <td>
                     <a asp-controller="Book" asp-action="Details" asp-route-bookId="@book.BookId">
                         <img src="@book.ImageUrl" class="card-img-top" alt="Cover Image" style="width: 100px; height: 100px; object-fit: contain" />               
                     </a>
-                </td>                    
+                </td>
+
+                @* Book Title and Author *@
                 <td>
                     <a class="book-title" asp-controller="Book" asp-action="Details" asp-route-bookId="@book.BookId">
                         <h6>@book.BookTitle</h6>
                     </a>
                     <p>@book.Author</p>
                 </td>
+
+                @* Book Rating *@
                 <td>
                     @if (book.ReadingStatusId == 1)
                     {
@@ -39,7 +44,9 @@
                     {
                         <partial name="_RatingPartial" model="book" />                        
                     }                    
-                </td>                
+                </td>
+
+                @* Favourite Character *@
                 <td>
                     @if (book.ReadingStatusId == 1)
                     {
@@ -52,6 +59,8 @@
                         <partial name="_FavouriteCharacterPartial" model="book" />                        
                     }                                  
                 </td>
+
+                @* Status *@
                 <td class="text-center">
                     @if (book.ReadingStatusId == 1)
                     {
@@ -64,6 +73,8 @@
                         @book.ReadingStatus
                     }             
                 </td>
+
+                @* Date Finished *@
                 <td class="text-center">
                     @if (book.ReadingStatusId == 1)
                     {
@@ -75,7 +86,9 @@
                     {
                         @book.DateFinished
                     }                    
-                </td>                              
+                </td>
+
+                @* Delete *@
                 <td>                    
                     <div class="col d-flex justify-content-end">
                         <a asp-controller="ReadingList" asp-action="Remove" asp-route-bookId="@book.BookId" class="align-content-end text-end delete">
